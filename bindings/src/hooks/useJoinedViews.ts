@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { ReactModel, type ViewInfo } from '../ReactModel'
-import { useCroquetContext } from './useCroquetContext'
+import { useMultisynqContext } from './useMultisynqContext'
 
 interface JoinedViews<T> {
   viewIds: string[]
@@ -47,7 +47,7 @@ function viewsSelector<T>(rootModel: ReactModel<T> | null): JoinedViews<T> {
   }
 }
 export function useJoinedViews<T = undefined>(): JoinedViews<T> {
-  const { session, view, model } = useCroquetContext<ReactModel<T>>()
+  const { session, view, model } = useMultisynqContext<ReactModel<T>>()
 
   const [views, setViews] = useState(viewsSelector<T>(model))
 
@@ -65,7 +65,7 @@ export function useJoinedViews<T = undefined>(): JoinedViews<T> {
   if (model && !model.__views) {
     throw new Error(
       'Your root model is not tracking the joined views.\n' +
-        'Pass `options: { trackViews: true }` to your <CroquetRoot> component to start tracking them\n'
+        'Pass `options: { trackViews: true }` to your <MultisynqRoot> component to start tracking them\n'
     )
   }
   return views

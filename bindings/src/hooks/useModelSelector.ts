@@ -1,6 +1,6 @@
 import { ReactModel } from '../ReactModel'
 import { useEffect, useState } from 'react'
-import { useCroquetContext } from './useCroquetContext'
+import { useMultisynqContext } from './useMultisynqContext'
 import hash_fn, { NotUndefined } from 'object-hash'
 
 interface ModelState<V> {
@@ -12,7 +12,7 @@ export function useModelSelector<M extends ReactModel, R extends NotUndefined>(s
   // Storing the first function received in state so that we stick to the first one
   // const [actualSelector] = useState<(m: M) => R>(selector)
 
-  const { session, view, model } = useCroquetContext<M>()
+  const { session, view, model } = useMultisynqContext<M>()
 
   // The selector function may return a pointer to an object/array/etc,
   // Storing the returned value's hash allows to determine if it has changed.

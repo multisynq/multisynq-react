@@ -1,14 +1,14 @@
-import { UpdateCallback } from '../CroquetReactView'
+import { UpdateCallback } from '../MultisynqReactView'
 import { useView } from './useView'
 
 /**
- * Hook that sets up a callback for Croquet.View.update().
+ * Hook that sets up a callback for Multisynq.View.update().
  *
  * The function will be called at each simulation cycle.
  */
 export function useUpdateCallback(callback: UpdateCallback | null): void {
-  const croquetView = useView()
-  if (croquetView !== null) {
-    croquetView.updateCallback = callback
+  const multisynqView = useView()
+  if (multisynqView !== null) {
+    multisynqView.updateCallback = callback
   }
 }

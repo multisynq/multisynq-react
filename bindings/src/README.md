@@ -1,5 +1,5 @@
-# Croquet React Bindings
+# Multisynq React Bindings
 
-The `@croquet/react` package provides a simple framework for using Croquet together with React. The main principle of `@croquet/react` is that React components fully assume the role of the View side of Croquet. (Behind the scenes, a normal Croquet View is still created to act as a slim contact point between the Croquet Model and the React components, but all View side logic is implemented in the React components.)
+The `@multisynq/react` package provides a simple framework for using Multisynq together with React. The main principle of `@multisynq/react` is that React components fully assume the role of the View side of Multisynq. (Behind the scenes, a normal Multisynq View is still created to act as a slim contact point between the Multisynq Model and the React components, but all View side logic is implemented in the React components.)
 
-Please also refer to croquet.io/docs for more information.
+Please also refer to multisynq.io/docs for more information.

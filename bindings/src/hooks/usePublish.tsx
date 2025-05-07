@@ -34,20 +34,20 @@ import { useView } from './useView'
 export function usePublish<T>(
   publishCallback: (...args: any[]) => [string, string] | [string, string, T]
 ): (...args: any[]) => T | undefined {
-  const croquetView = useView()
+  const multisynqView = useView()
   return useCallback(
     (...args) => {
-      if (croquetView === null) return
+      if (multisynqView === null) return
       const result = publishCallback(...args)
       let ret: T | undefined
       if (result && result.length >= 2) {
         const [scope, event, data] = result
-        croquetView.publish(scope, event, data)
+        multisynqView.publish(scope, event, data)
         ret = data
       }
       return ret
     },
     // deps are not in play here as publishCallback has to be fresh to capture what it depends on
-    [publishCallback, croquetView]
+    [publishCallback, multisynqView]
   )
 }

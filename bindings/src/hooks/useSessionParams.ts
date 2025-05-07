@@ -1,6 +1,6 @@
-import { useCroquetContext } from "./useCroquetContext"
+import { useMultisynqContext } from "./useMultisynqContext"
 
 export function useSessionParams() {
-    const { sessionParams } = useCroquetContext()
+    const { sessionParams } = useMultisynqContext()
     return sessionParams
 }

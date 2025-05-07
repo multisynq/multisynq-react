@@ -1,12 +1,12 @@
-# Croquet React Bindings
+# Multisynq React Bindings
 
-[https://croquet.io](https://croquet.io)
+[https://multisynq.io](https://multisynq.io)
 
-This repository contains the source code of [Croquet React bindings](https://www.npmjs.com/package/@croquet/react), documentation and simple examples.
+This repository contains the source code of [Multisynq React bindings](https://www.npmjs.com/package/@multisynq/react), documentation and simple examples.
 
-We recommend you to use [Vite](https://vitejs.dev) for building your app. Follow `package.json` and `vite.config.js` to set up your Croquet React project.
+We recommend you to use [Vite](https://vitejs.dev) for building your app. Follow `package.json` and `vite.config.js` to set up your Multisynq React project.
 
-The `doc` directory contains files for https://croquet.io/docs/croquet-react.
+The `doc` directory contains files for https://multisynq.io/docs/multisynq-react.
 
 
 

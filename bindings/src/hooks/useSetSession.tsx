@@ -1,10 +1,10 @@
-import { useCroquetContext } from './useCroquetContext'
+import { useMultisynqContext } from './useMultisynqContext'
 
-/** This hook returns a function that changes the CroquetSession the user is joined to
+/** This hook returns a function that changes the MultisynqSession the user is joined to
  * @param name
  * @param password
  */
 export function useSetSession() {
-  const { setSession } = useCroquetContext()
+  const { setSession } = useMultisynqContext()
   return setSession
 }

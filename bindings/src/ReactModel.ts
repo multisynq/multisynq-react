@@ -1,6 +1,6 @@
-import { Model, SubscriptionHandler, FutureHandler } from '@croquet/croquet'
+import { Model, SubscriptionHandler, FutureHandler } from '@multisynq/client'
 
-// TODO: import from @croquet/croquet
+// TODO: import from @multisynq/client
 export interface ViewInfo<T> {
   viewId: string
   viewData?: T
@@ -60,7 +60,7 @@ export class ReactModel<T = unknown> extends Model {
   subscribe<T>(scope: string, event: string, handler: SubscriptionHandler<T>): void {
     if (event === 'view-join' || event === 'view-exit') {
       throw new Error(
-        `In @croquet/react you cannot directly subscribe to ${event}.\n` +
+        `In @multisynq/react you cannot directly subscribe to ${event}.\n` +
           `Override ${event === 'view-join' ? 'handleViewJoin' : 'handleViewExit'} instead\n`
       )
     }
@@ -86,7 +86,7 @@ export class ReactModel<T = unknown> extends Model {
       if (typeof handler === 'function') handler(data)
       else this[handler](data)
       this.publish(this.sessionId, 'react-updated')
-    }`) 
+    }`)
 
     super.subscribe(scope, event, reactHandler)
   }

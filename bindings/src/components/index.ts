@@ -1,6 +1,6 @@
-import { CroquetRoot } from './CroquetRoot'
-import { InCroquetSession } from './InCroquetSession'
-import { createCroquetSession } from '../createCroquetSession'
-import { CroquetContext } from './CroquetContext'
+import { MultisynqRoot } from './MultisynqRoot'
+import { InMultisynqSession } from './InMultisynqSession'
+import { createMultisynqSession } from '../createMultisynqSession'
+import { MultisynqContext } from './MultisynqContext'
 
-export { CroquetRoot, InCroquetSession, createCroquetSession, CroquetContext }
+export { MultisynqRoot, InMultisynqSession, createMultisynqSession, MultisynqContext }

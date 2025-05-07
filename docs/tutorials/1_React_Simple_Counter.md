@@ -1,5 +1,5 @@
-This tutorial directly corresponds to the ["Hello World" tutorial](../croquet/tutorial-1_1_hello_world.html) of the Croquet Library. In fact the model side looks exactly the same. The following document assumes you are familiar with the main concepts presented there.
-The source code for this tutorial is available on [GitHub](https://github.com/croquet/croquet-react-counter).
+This tutorial directly corresponds to the ["Hello World" tutorial](../client/tutorial-1_1_hello_world.html) of the Multisynq Library. In fact the model side looks exactly the same. The following document assumes you are familiar with the main concepts presented there.
+The source code for this tutorial is available on [GitHub](https://github.com/multisynq/multisynq-react-counter).
 
 The following example uses [Vite](https://vitejs.dev) for build. Other bundlers work fine also, but Vite is easy to get started as of writing in early 2024.
 
@@ -14,9 +14,9 @@ import ReactDOM from "react-dom/client";
 import React from "react";
 import {
   useReactModelRoot,
-  CroquetRoot,
+  MultisynqRoot,
   ReactModel,
-} from "@croquet/react";
+} from "@multisynq/react";
 ```
 
 We then define the `CounterModel` class.
@@ -51,32 +51,32 @@ class CounterModel extends ReactModel {
 }
 ```
 
-After defining the model, we have to register it in the Croquet framework.
+After defining the model, we have to register it in the Multisynq framework.
 
 ```tsx
 CounterModel.register("CounterModel");
 ```
 
 Now, we define the `CounterApp`, which will be our top level React component.
-We use the `InCroquetSession` component to provide the running Croquet session to its children.
-This component takes the role of the [`Session.join`](../croquet/Session.html#.join) method in `@croquet/croquet`, and can be configured with the same parameters.
+We use the `InMultisynqSession` component to provide the running Multisynq session to its children.
+This component takes the role of the [`Session.join`](../client/Session.html#.join) method in `@multisynq/client`, and can be configured with the same parameters.
 We recommend specifying those values in environment variables so that it's easier to manage them (e.g. switching between development and production keys).
 For more information about this topic, feel free to check out [this article](https://kinsta.com/knowledgebase/what-is-an-environment-variable/).
 
 ```tsx
 function CounterApp() {
   return (
-    <CroquetRoot
+    <MultisynqRoot
       sessionParams={{
-        apiKey: import.meta.env["VITE_CROQUET_API_KEY"],
-        appId: import.meta.env["VITE_CROQUET_APP_ID"],
+        apiKey: import.meta.env["VITE_MULTISYNQ_API_KEY"],
+        appId: import.meta.env["VITE_MULTISYNQ_APP_ID"],
         password: "abc",
         name: "counter",
         model: CounterModel,
       }}
     >
       <CounterDisplay />
-    </CroquetRoot>
+    </MultisynqRoot>
   );
 }
 ```

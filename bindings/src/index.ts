@@ -1,10 +1,10 @@
-export { Model, View, Data, Session, Constants, App, CroquetSession, CroquetSessionParameters } from '@croquet/croquet'
+export { Model, View, Data, Session, Constants, App, MultisynqSession, MultisynqSessionParameters } from '@multisynq/client'
 
 import { ReactModel, type ViewInfo } from './ReactModel'
-import { CroquetReactView } from './CroquetReactView'
-import { createCroquetSession } from './createCroquetSession'
+import { MultisynqReactView } from './MultisynqReactView'
+import { createMultisynqSession } from './createMultisynqSession'
 
-export { ReactModel, CroquetReactView, createCroquetSession }
+export { ReactModel, MultisynqReactView, createMultisynqSession }
 export type { ViewInfo }
 
 export * from './components'

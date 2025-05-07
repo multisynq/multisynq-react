@@ -1,6 +1,6 @@
 In this tutorial, we implement a simple multiplayer music box to illustrate realtime view side update and how to use other hooks.
 We also use TypeScript in this example.
-The source code is available on [GitHub](https://github.com/croquet/croquet-react-musicbox).
+The source code is available on [GitHub](https://github.com/multisynq/multisynq-react-musicbox).
 
 The app has a number of "balls", each of which represents the timing and pitch of a note. A participant can manipulate them to compose a loop. The timing for the bar to wrap is synchronized by the model side logic, but the view interpolates the position of the bar and plays a sound when the bar passes a ball.
 
@@ -44,25 +44,25 @@ move(data: MoveData) {
 }
 ```
 
-Moving over to the view side, we first define our top-level component, `MusicBoxApp`, which starts a Croquet session. We use Vite's feature to configure parameters. You can use different mechanisms or just hardcode your configuration if you use a different bundler.
+Moving over to the view side, we first define our top-level component, `MusicBoxApp`, which starts a Multisynq session. We use Vite's feature to configure parameters. You can use different mechanisms or just hardcode your configuration if you use a different bundler.
 
 ```
 function MusicBoxApp() {
   return (
-    <CroquetRoot
+    <MultisynqRoot
       sessionParams={{
-        name: import.meta.env["VITE_CROQUET_APP_NAME"],
-        apiKey: import.meta.env["VITE_CROQUET_API_KEY"],
+        name: import.meta.env["VITE_MULTISYNQ_NAME"],
+        apiKey: import.meta.env["VITE_MULTISYNQ_API_KEY"],
         tps: 0.5,
-        appId: import.meta.env["VITE_CROQUET_APP_ID"],
-        password: import.meta.env["VITE_CROQUET_PASSWORD"],
+        appId: import.meta.env["VITE_MULTISYNQ_APP_ID"],
+        password: import.meta.env["VITE_MULTISYNQ_PASSWORD"],
         model: MusicBoxModel,
         eventRateLimit: import.meta.env["EVENT_RATE_LIMIT"] || 60,
         options: { trackViews: true },
       }}
     >
       <MusicBoxField />
-    </CroquetRoot>
+    </MultisynqRoot>
   );
 }
 ```
@@ -129,13 +129,13 @@ The `pointerMove` handler follows the similar structure. The latter part compute
     if (y > model.height - BallDiameter * 2) {y = model.height - BallDiameter * 2;}
     const step = (model.height - BallDiameter * 2) / 12;
     y = Math.floor(y / step) * step;
-  
+
     model.move({viewId, id: info.ballId, x, y})
   }, [grabInfo, model.move, model.height, viewId/*, model.width*/]);
 
 ```
 
-Because we want the bar to keep moving smoothly at 60 fps (or more), we need to tap into the `Croquet.View`'s `update()` method. The `useUpdateCallback` hook "injects" a function into `update()` and has it invoked from each `update()` call. The argument for the hook typically needs to be a fresh function, thus is defined as a function in the component.
+Because we want the bar to keep moving smoothly at 60 fps (or more), we need to tap into the `Multisynq.View`'s `update()` method. The `useUpdateCallback` hook "injects" a function into `update()` and has it invoked from each `update()` call. The argument for the hook typically needs to be a fresh function, thus is defined as a function in the component.
 
 ```
 useUpdateCallback(update);
@@ -158,7 +158,7 @@ return (
         onPointerDown={(pointerDown as unknown) as React.PointerEventHandler<HTMLDivElement>}
         onPointerMove={(pointerMove as unknown) as React.PointerEventHandler<HTMLDivElement>}
         onPointerUp={(pointerUp as unknown) as React.PointerEventHandler<HTMLDivElement>}
-      >  
+      >
         <Bar pos={barPos}></Bar>
         {balls}
      </div>
@@ -167,4 +167,4 @@ return (
   );
 ```
 
-A word of caution here, however, is that a Croquet application may as well be easier to develop on top of the vanilla Croquet library or the Virtual DOM framework. As you can see above, the view side smoothing logic requires a separate data source for components and makes imperative udpates on the data source. Handling a list of components whose properties may be changed by more than one client requires more computation than simply setting values into elements. A careful deliberation on the trade-offs between frameworks is something one should do before picking the `@croquet/react` framework.
+A word of caution here, however, is that a Multisynq application may as well be easier to develop on top of the vanilla Multisynq library or the Virtual DOM framework. As you can see above, the view side smoothing logic requires a separate data source for components and makes imperative udpates on the data source. Handling a list of components whose properties may be changed by more than one client requires more computation than simply setting values into elements. A careful deliberation on the trade-offs between frameworks is something one should do before picking the `@multisynq/react` framework.

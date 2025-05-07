@@ -1,7 +1,7 @@
 {
-  "name": "@croquet/react",
-  "version": "2.3.0-1",
-  "description": "React bindings for Croquet",
+  "name": "@multisynq/react",
+  "version": "1.0.0",
+  "description": "React bindings for Multisynq",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -14,27 +14,28 @@
   "author": "Croquet Labs",
   "license": "Apache-2.0",
   "dependencies": {
-    "@croquet/croquet": "^2.0.0-42",
+    "@multisynq/client": "^1.0.0",
     "object-hash": "^3.0.0"
   },
   "peerDependencies": {
     "react": "^18.2.0"
   },
   "devDependencies": {
-    "@types/node": "^22.4.1",
+    "@types/node": "^22.15.14",
     "@types/object-hash": "^3.0.6",
     "@types/react": "^18.2.75",
     "@types/react-dom": "^18.2.24",
-    "@typescript-eslint/eslint-plugin": "^7.6.0",
-    "@typescript-eslint/parser": "^7.6.0",
-    "eslint-plugin-react": "^7.34.1",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "typescript": "^5.4.5"
+    "@typescript-eslint/eslint-plugin": "^8.32.0",
+    "@typescript-eslint/parser": "^8.32.0",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "typescript": "^5.8.3"
   },
   "publishConfig": {
     "access": "public"
   },
   "keywords": [
+    "multisynq",
     "croquet",
     "collaboration",
     "realtime",

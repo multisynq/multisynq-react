@@ -1,9 +1,9 @@
 import { ReactModel } from '../ReactModel'
 import { useEffect, useState } from 'react'
-import { useCroquetContext } from './useCroquetContext'
-import { CroquetReactView } from '../CroquetReactView'
+import { useMultisynqContext } from './useMultisynqContext'
+import { MultisynqReactView } from '../MultisynqReactView'
 
-function getModelObject<T extends ReactModel>(view: CroquetReactView<T> | null, model: T | null): T | null {
+function getModelObject<T extends ReactModel>(view: MultisynqReactView<T> | null, model: T | null): T | null {
   const methods: Partial<T> = {}
   const excludeMethods = new Set(['view-join', 'view-exit'])
   if (!view || !model) return null
@@ -34,7 +34,7 @@ function getModelObject<T extends ReactModel>(view: CroquetReactView<T> | null, 
 }
 
 export function useReactModelRoot<T extends ReactModel>(): T | null {
-  const { session, view, model } = useCroquetContext<T>()
+  const { session, view, model } = useMultisynqContext<T>()
   const [modelState, setModelState] = useState(getModelObject(view, model))
 
   useEffect(() => {
@@ -45,7 +45,7 @@ export function useReactModelRoot<T extends ReactModel>(): T | null {
 
     // Here we are creating a shallow copy of model to
     // force react to rerender with the updated data
-    // console.log('@croquet/react: react-updated')
+    // console.log('@multisynq/react: react-updated')
     const handler = () => setModelState(getModelObject(view, model))
 
     view.subscribe(session.id, { event: 'react-updated', handling: 'oncePerFrame' }, handler)

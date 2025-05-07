@@ -1,23 +1,23 @@
-In previous tutorials, we explored Croquet's capabilities by [creating a collaborative painting](./tutorial-3_0_React_Mondrian.html) and tracking the number of [connected users](./tutorial-3_1_React_Mondrian_Player_Count.html).
+In previous tutorials, we explored Multisynq's capabilities by [creating a collaborative painting](./tutorial-3_0_React_Mondrian.html) and tracking the number of [connected users](./tutorial-3_1_React_Mondrian_Player_Count.html).
 
-In this tutorial, we'll take a step further by enabling users to paint in separate "art studios," represented by different Croquet sessions.
+In this tutorial, we'll take a step further by enabling users to paint in separate "art studios," represented by different Multisynq sessions.
 Our goal is to ensure that users sharing the same session collaborate on the same painting, while paintings in different sessions remain independent.
 
 Below, you'll find three windows representing three distinct users.
 Feel free to switch between studios and experiment with different paintings!
 
 <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: space-between">
-    <iframe src="https://croquet.io/mondrian?tutorial=3&session=studio-1"
+    <iframe src="https://apps.multisynq.io/mondrian?tutorial=3&session=studio-1"
         style="flex: 1; min-width: 300px; height:500px; overflow:scroll; border: 1px solid black; border-radius: 5px"
         allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
         sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
     ></iframe>
-    <iframe src="https://croquet.io/mondrian?tutorial=3&session=studio-2"
+    <iframe src="https://apps.multisynq.io/mondrian?tutorial=3&session=studio-2"
         style="flex: 1; min-width: 300px; height:500px; overflow:scroll; border: 1px solid black; border-radius: 5px"
         allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
         sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
     ></iframe>
-    <iframe src="https://croquet.io/mondrian?tutorial=3&session=studio-3"
+    <iframe src="https://apps.multisynq.io/mondrian?tutorial=3&session=studio-3"
         style="flex: 1; min-width: 300px; height:500px; overflow:scroll; border: 1px solid black; border-radius: 5px"
         allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
         sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
@@ -61,26 +61,26 @@ import { sessions } from './data/sessions'
 
 export default function App() {
   return (
-    <CroquetRoot
+    <MultisynqRoot
       sessionParams={{
         model: RootModel,
-        appId: import.meta.env['VITE_CROQUET_APP_ID'],
-        apiKey: import.meta.env['VITE_CROQUET_API_KEY'],
+        appId: import.meta.env['VITE_MULTISYNQ_APP_ID'],
+        apiKey: import.meta.env['VITE_MULTISYNQ_API_KEY'],
         name: sessions[0].name,
         password: sessions[0].password,
       }}
     >
       <Mondrian />
-    </CroquetRoot>
+    </MultisynqRoot>
   )
 }
 ```
 
-In this snippet, we're importing session details from our `sessions.ts` file and passing the name and password of the first session in the list to our `CroquetRoot` component.
+In this snippet, we're importing session details from our `sessions.ts` file and passing the name and password of the first session in the list to our `MultisynqRoot` component.
 
-## Selecting the Croquet Session for User Connection
+## Selecting the Multisynq Session for User Connection
 
-In this step, we'll implement an interface to manage the Croquet session to which the user connects.
+In this step, we'll implement an interface to manage the Multisynq session to which the user connects.
 We'll begin by creating the Dropdown component:
 
 1. **Create the `components/Dropdown.tsx` file with the following content**
@@ -164,9 +164,9 @@ export default function App() {
 
 Now that the user can select a different session, it's time to actually connect to it.
 
-## Dynamically changing the Croquet session
+## Dynamically changing the Multisynq session
 
-`@croquet/react` provides two useful hooks that allow us to dynamically change the Croquet session we are connected to:
+`@multisynq/react` provides two useful hooks that allow us to dynamically change the Multisynq session we are connected to:
 
 - `useSession()` returns the current session we are connected to;
 - `useChangeSession()` returns a function that changes the current session name and password.
@@ -179,7 +179,7 @@ Instead, we can compute it from the current session and the session data.
 
 ```tsx
 // Add these imports
-import { useSession, useChangeSession } from '@croquet/react'
+import { useSession, useChangeSession } from '@multisynq/react'
 
 export default function Mondrian() {
   // ... Other code
@@ -201,20 +201,20 @@ export default function Mondrian() {
 }
 ```
 
-With this update, whenever you select a different session on the dropdown, Croquet will connect you to that session!!
+With this update, whenever you select a different session on the dropdown, Multisynq will connect you to that session!!
 
 ## Next steps
 
 Congratulations!
 You've successfully implemented a multi-studio painting application!!
 
-In this tutorial you've learned how to dynamically configure the session your Croquet app is connected to!
+In this tutorial you've learned how to dynamically configure the session your Multisynq app is connected to!
 This marks the end of this tutorial series!!
 
 ## Further Resources
 
-[Croquet API Documentation](./global.html): Explore the comprehensive Croquet API documentation to gain a deeper understanding of Croquet's capabilities and features.
+[Multisynq API Documentation](./global.html): Explore the comprehensive Multisynq API documentation to gain a deeper understanding of Multisynq's capabilities and features.
 
-<!-- Croquet Discord Community: Join the Croquet Discord community to connect with other developers, ask questions, share insights, and stay updated on the latest Croquet developments and announcements. -->
+<!-- Multisynq Discord Community: Join the Multisynq Discord community to connect with other developers, ask questions, share insights, and stay updated on the latest Multisynq developments and announcements. -->
 
 Happy coding!

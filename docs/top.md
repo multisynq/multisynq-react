@@ -1,15 +1,15 @@
-The Croquet React bindings is a simple framework for using Croquet together with React.js. It allows to write the Croquet's View side code in React that works with the Croquet Model code.
-This documentation assumes that you are familiarized with Croquet's [main concepts](../croquet/index.html#main-concepts) and how [views](../croquet/index.html#views) and [models](../croquet/index.html#models) interact via [events](../croquet/index.html#events).
+The Multisynq React bindings is a simple framework for using Multisynq together with React.js. It allows to write the Multisynq's View side code in React that works with the Multisynq Model code.
+This documentation assumes that you are familiarized with Multisynq's [main concepts](../client/index.html#main-concepts) and how [views](../client/index.html#views) and [models](../client/index.html#models) interact via [events](../client/index.html#events).
 
 Upgrading from v1.4? Check out our [Migration Guide](./v2.0.0_migration_guide.html)
 
 ## Overview
 
-The [`@croquet/react`](https://www.npmjs.com/package/@croquet/react) package provides a simple framework for using Croquet together with React.
-The main principle of [`@croquet/react`](https://www.npmjs.com/package/@croquet/react) is that React components fully assume the role of the [View](../croquet/index.html#views) side of Croquet.
-Behind the scenes, a normal Croquet View is still created to act as a slim contact point between the Croquet [Model](../croquet/index.html#models) and the React components, but all View side logic is implemented in the React components.
+The [`@multisynq/react`](https://www.npmjs.com/package/@multisynq/react) package provides a simple framework for using Multisynq together with React.
+The main principle of [`@multisynq/react`](https://www.npmjs.com/package/@multisynq/react) is that React components fully assume the role of the [View](../client/index.html#views) side of Multisynq.
+Behind the scenes, a normal Multisynq View is still created to act as a slim contact point between the Multisynq [Model](../client/index.html#models) and the React components, but all View side logic is implemented in the React components.
 
-React components interact with Croquet using **hooks** for accessing the features the Croquet Library offers, such as subscribing to model events or publishing events among models and other views. These tutorials assume that you are familiar with the "functional-component + hooks" style of writing React apps. If you aren't, [the official React tutorial on hooks](https://react.dev/reference/react/hooks) is a good starting point.
+React components interact with Multisynq using **hooks** for accessing the features the Multisynq Library offers, such as subscribing to model events or publishing events among models and other views. These tutorials assume that you are familiar with the "functional-component + hooks" style of writing React apps. If you aren't, [the official React tutorial on hooks](https://react.dev/reference/react/hooks) is a good starting point.
 
 ## Tutorials
 
@@ -26,7 +26,7 @@ The [documentation](./global.html) contains minimal usage examples, which will a
 
 ## React Together
 
-[React Together](https://reacttogether.dev) is a library built on top of `@croquet/react`. It provides additional hooks and utility components to simplify the development of collaborative React applications:
+[React Together](https://reacttogether.dev) is a library built on top of `@multisynq/react`. It provides additional hooks and utility components to simplify the development of collaborative React applications:
 
 * Hooks for shared state management across multiple users
 * Hooks for simultaneous function execution across connected views

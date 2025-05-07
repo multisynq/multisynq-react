@@ -1,11 +1,11 @@
-In this tutorial, we'll explore how to build a collaborative Mondrian-style painting application using Croquet and React.
+In this tutorial, we'll explore how to build a collaborative Mondrian-style painting application using Multisynq and React.
 The painting will be synchronized across multiple clients, allowing users to collaborate in real-time on creating a shared canvas.
-This tutorial assumes you have basic knowledge of [React](https://react.dev/learn) and familiarity with the [main concepts of Croquet](../croquet/index.html#main-concepts).
+This tutorial assumes you have basic knowledge of [React](https://react.dev/learn) and familiarity with the [main concepts of Multisynq](../client/index.html#main-concepts).
 
-The source code for this example is available on [Github](https://github.com/croquet/croquet-react-mondrian/).
+The source code for this example is available on [Github](https://github.com/multisynq/multisynq-react-mondrian/).
 
 <iframe
-  src="https://croquet.io/dev/mondrian?tutorial=1"
+  src="https://apps.multisynq.io/mondrian?tutorial=1"
   style="width:100%; height:700px; border:0; border-radius: 4px; overflow:scroll;"
   allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
   sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
@@ -30,7 +30,7 @@ Next, update the `package.json` file to add the following dependencies:
 {
   "dependencies": {
     // ... Other dependencies
-    "@croquet/react": "^1.4.4",
+    "@multisynq/react": "^1.0.0",
     "react-icons": "^5.0.1"
   }
 }
@@ -92,7 +92,7 @@ Now we can create our painting model.
 2. **Create a new file `src/models/PaintingModel.ts`**
 
 ```ts
-import { ReactModel } from '@croquet/react'
+import { ReactModel } from '@multisynq/react'
 import { defaultPaintingCells } from '../data/paintingCells'
 
 export default class PaintingModel extends ReactModel {
@@ -125,7 +125,7 @@ export default class PaintingModel extends ReactModel {
   We also subscribe to the `'paint'` and `'reset'` model events, setting `this.paint` and `this.reset` as the event handlers.
   Whenever any of these events is received, the respective handler will be called.
   Note that **models should be initialized in the `init` method.**
-  For more information, please refer to [this page](../croquet/index.html#models)
+  For more information, please refer to [this page](../client/index.html#models)
 
 - The `reset` method is called whenever the model receives a `'reset'` event associated with the model's scope.
   To reset a model, we just set the cells to their default state.
@@ -153,7 +153,7 @@ You may need to reload/restart your code editor to include the updated configura
 
 3. ⚠️ **Make sure you don't forget to register the model!**
 
-Now that we created the model, it's **extremely important** that we do not forget to register it in Croquet.
+Now that we created the model, it's **extremely important** that we do not forget to register it in Multisynq.
 Do so by adding the following line in the end of `src/models/PaintingModel.tsx`.
 
 ```ts
@@ -422,7 +422,7 @@ Now we need to make the `<Mondrian/>` component.
 Create a new file `src/components/Mondrian.tsx` with the following contents
 
 ```tsx
-import { useReactModelRoot } from '@croquet/react'
+import { useReactModelRoot } from '@multisynq/react'
 
 import PaintingModel from '../models/PaintingModel'
 import Painting from './Painting'
@@ -456,42 +456,42 @@ export default function App() {
 If you open your browser now, you should see a blank page, and if you check the console, you will see the following error message:
 
 ```
-Error: No Croquet Session found
+Error: No Multisynq Session found
 ```
 
-This indicates that we are using the `useReactModelRoot` hook outside of the Croquet context.
-To fix this, we need to encapsulate the `<App/>` inside `<CroquetRoot/>`.
+This indicates that we are using the `useReactModelRoot` hook outside of the Multisynq context.
+To fix this, we need to encapsulate the `<App/>` inside `<MultisynqRoot/>`.
 
-3. **Insert your App inside the Croquet Session context provider**
+3. **Insert your App inside the Multisynq Session context provider**
 
 Make sure your `src/App.tsx` file looks like the following:
 
 ```tsx
-import { CroquetRoot } from '@croquet/react'
+import { MultisynqRoot } from '@multisynq/react'
 
 import Mondrian from './components/Mondrian'
 import PaintingModel from './models/PaintingModel'
 
 export default function App() {
   return (
-    <CroquetRoot
+    <MultisynqRoot
       sessionParams={{
         model: PaintingModel,
-        appId: import.meta.env['VITE_CROQUET_APP_ID'],
-        apiKey: import.meta.env['VITE_CROQUET_API_KEY'],
-        name: import.meta.env['VITE_CROQUET_NAME'],
-        password: import.meta.env['VITE_CROQUET_PASSWORD'],
+        appId: import.meta.env['VITE_MULTISYNQ_APP_ID'],
+        apiKey: import.meta.env['VITE_MULTISYNQ_API_KEY'],
+        name: import.meta.env['VITE_MULTISYNQ_NAME'],
+        password: import.meta.env['VITE_MULTISYNQ_PASSWORD'],
       }}
     >
       <Mondrian />
-    </CroquetRoot>
+    </MultisynqRoot>
   )
 }
 ```
 
-The `<CroquetRoot/>` component provides the Croquet Session context to its children.
-That is why it is required in order to use Croquet hooks.
-For more information about this component, please refer to the [API Documentation](./global.html#CroquetRoot).
+The `<MultisynqRoot/>` component provides the Multisynq Session context to its children.
+That is why it is required in order to use Multisynq hooks.
+For more information about this component, please refer to the [API Documentation](./global.html#MultisynqRoot).
 
 4. **Store your configuration in environment variables**
 
@@ -500,14 +500,14 @@ We recommend using environment variables to hold these configuration values, sin
 To do so, create a `.env` file with the following contents:
 
 ```
-VITE_CROQUET_APP_ID=YOUR_APP_ID
-VITE_CROQUET_API_KEY=YOUR_API_KEY
-VITE_CROQUET_NAME=THE_SESSION_NAME
-VITE_CROQUET_PASSWORD=THE_SESSION_PASSWORD
+VITE_MULTISYNQ_APP_ID=YOUR_APP_ID
+VITE_MULTISYNQ_API_KEY=YOUR_API_KEY
+VITE_MULTISYNQ_NAME=THE_SESSION_NAME
+VITE_MULTISYNQ_PASSWORD=THE_SESSION_PASSWORD
 ```
 
 Replace the placeholders with your actual values.
-If you don't have an App ID and API Key, you can get them on the [Croquet Dashboard](https://croquet.io/account/).
+If you don't have an App ID and API Key, you can get them on the [Multisynq Dashboard](https://multisynq.io/coder/).
 The session name and password are arbitrary values that will determine the session you will be connected to.
 
 Congratulations!! Now you should see your beautiful Mondrian painting on your screen.
@@ -590,7 +590,7 @@ export default function Mondrian() {
 }
 ```
 
-Note that since the `selectedColor` state is not in the Croquet model, it will not be shared between different users.
+Note that since the `selectedColor` state is not in the Multisynq model, it will not be shared between different users.
 
 Now we need to change the cell colors whenever a cell is clicked.
 
@@ -730,5 +730,5 @@ That's it! Now when you click the reset button, the painting should return to it
 Congratulations!
 You've created a multi-user painting editor that lets any user edit a shared painting!
 
-Throughout this tutorial, you've touched on several Croquet concepts including Models, Views and Events.
+Throughout this tutorial, you've touched on several Multisynq concepts including Models, Views and Events.
 Now that you've seen how these concepts work, check out [Adding the View Count](./tutorial-3_1_React_Mondrian_Player_Count.html) to see how to work with multiple models at the same time.

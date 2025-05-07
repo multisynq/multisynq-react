@@ -22,17 +22,17 @@ import { useView } from './useView'
  *  }
  * ``` */
 export function useSubscribe<T>(scope: string, eventSpec: string, callback: (data: T) => void): void {
-  const croquetView = useView()
+  const multisynqView = useView()
   useEffect(() => {
-    if (croquetView === null) return
+    if (multisynqView === null) return
 
-    croquetView.subscribe(scope, eventSpec, callback)
+    multisynqView.subscribe(scope, eventSpec, callback)
 
     // cleanup on component unmount
     return () => {
-      if (croquetView !== null) {
-        croquetView.unsubscribe(scope, eventSpec, callback)
+      if (multisynqView !== null) {
+        multisynqView.unsubscribe(scope, eventSpec, callback)
       }
     }
-  }, [scope, eventSpec, callback, croquetView])
+  }, [scope, eventSpec, callback, multisynqView])
 }

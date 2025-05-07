@@ -1,6 +1,6 @@
 We built the foundation for our Mondrian application in the [previous tutorial](./tutorial-3_0_React_Mondrian.html).
 We will now extend it to display the number of connected views!
-Although `@croquet/react` already provides a builtin hook to get the connected views ([useConnectedViews]()), we will implement that logic in this tutorial, since it's a good use case to use multiple models simultaneously.
+Although `@multisynq/react` already provides a builtin hook to get the connected views ([useConnectedViews]()), we will implement that logic in this tutorial, since it's a good use case to use multiple models simultaneously.
 
 ## Updating the Models
 
@@ -12,7 +12,7 @@ We start by creating a `Root` model where we will store both the painting model 
 1. **Create a new file `src/models/RootModel.ts`**
 
 ```ts
-import { ReactModel } from '@croquet/react'
+import { ReactModel } from '@multisynq/react'
 import PaintingModel from './PaintingModel'
 
 export default class RootModel extends ReactModel {
@@ -37,8 +37,8 @@ This `RootModel` contains two attributes:
 - `views`: Stores a set of if of the connected views.
   We opted to store these values instead of a simple count because it gives us more information that may be useful in the future.
 
-These attributes are initialized in the [init](../croquet/Model.html#init) method.
-Note that we use the [create](../croquet/Model.html#.create) method to create a new instance of the `Painting` model.
+These attributes are initialized in the [init](../client/Model.html#init) method.
+Note that we use the [create](../client/Model.html#.create) method to create a new instance of the `Painting` model.
 
 2. **Update `App.tsx` and `Mondrian.tsx` to use the `RootModel`**
 
@@ -51,14 +51,14 @@ import RootModel from './models/RootModel'
 
 export default function App() {
   return (
-    <CroquetRoot
+    <MultisynqRoot
       sessionParams={{
         model: RootModel,
         // ... Other params
       }}
     >
       <Mondrian />
-    </CroquetRoot>
+    </MultisynqRoot>
   )
 }
 ```

@@ -1,17 +1,17 @@
 import { useEffect, useState, useRef, useCallback } from 'react'
-import { CroquetSession, App } from '@croquet/croquet'
-import { CroquetReactView } from '../CroquetReactView'
-import { setSyncedCallback } from '../CroquetReactView'
-import { CroquetContext } from './CroquetContext'
-import { createCroquetSession, CroquetReactSessionParameters } from '../createCroquetSession'
+import { MultisynqSession, App } from '@multisynq/client'
+import { MultisynqReactView } from '../MultisynqReactView'
+import { setSyncedCallback } from '../MultisynqReactView'
+import { MultisynqContext } from './MultisynqContext'
+import { createMultisynqSession, MultisynqReactSessionParameters } from '../createMultisynqSession'
 import { ReactModel } from '../ReactModel'
 
-export interface ReactSessionParameters<M extends ReactModel> extends Omit<CroquetReactSessionParameters<M>, 'name'> {
+export interface ReactSessionParameters<M extends ReactModel> extends Omit<MultisynqReactSessionParameters<M>, 'name'> {
   name?: string
   password?: string
 }
 
-interface CroquetRootProps<M extends ReactModel> {
+interface MultisynqRootProps<M extends ReactModel> {
   sessionParams: ReactSessionParameters<M>
   children: React.ReactElement | React.ReactElement[] | null
   showChildrenWithoutSession?: boolean
@@ -22,23 +22,23 @@ interface SessionParamsState<M extends ReactModel> extends ReactSessionParameter
   join: boolean
 }
 
-/** CroquetRoot component implements the default implementation of the logic described for createCroquetSession function.
+/** MultisynqRoot component implements the default implementation of the logic described for createMultisynqSession function.
  */
-export function CroquetRoot<M extends ReactModel>({
+export function MultisynqRoot<M extends ReactModel>({
   sessionParams,
   children,
   showChildrenWithoutSession = false,
   deferSession = false,
-}: CroquetRootProps<M>): JSX.Element | null {
+}: MultisynqRootProps<M>): JSX.Element | null {
   // Make sure we only create a new session once, even with strict mode
-  const croquetSessionRef = useRef<CroquetSession<CroquetReactView<M>> | 'joining' | null>(null)
+  const multisynqSessionRef = useRef<MultisynqSession<MultisynqReactView<M>> | 'joining' | null>(null)
 
   // Used for smooth session transitioning
-  const nextSessionRef = useRef<CroquetSession<CroquetReactView<M>> | null>(null)
+  const nextSessionRef = useRef<MultisynqSession<MultisynqReactView<M>> | null>(null)
 
-  const [croquetSession, setCroquetSession] = useState<CroquetSession<CroquetReactView<M>> | null>(null)
-  const [croquetView, setCroquetView] = useState<CroquetReactView<M> | null>(null)
-  const [currentSessionParams, setCurrentSessionParams] = useState<SessionParamsState<M>>(() => { 
+  const [multisynqSession, setMultisynqSession] = useState<MultisynqSession<MultisynqReactView<M>> | null>(null)
+  const [multisynqView, setMultisynqView] = useState<MultisynqReactView<M> | null>(null)
+  const [currentSessionParams, setCurrentSessionParams] = useState<SessionParamsState<M>>(() => {
     if(!deferSession) {
       if(!sessionParams.name) {
         sessionParams.name = App.randomSession()
@@ -47,16 +47,16 @@ export function CroquetRoot<M extends ReactModel>({
         sessionParams.password = App.randomPassword()
       }
     }
-    return { ...sessionParams, join: !deferSession } 
+    return { ...sessionParams, join: !deferSession }
   })
 
   // This function updates the state (session, view)
   const updateState = useCallback(
-    (session: CroquetSession<CroquetReactView<M>> | null) => {
-      setCroquetSession(session)
-      setCroquetView(session?.view ?? null)
+    (session: MultisynqSession<MultisynqReactView<M>> | null) => {
+      setMultisynqSession(session)
+      setMultisynqView(session?.view ?? null)
     },
-    [setCroquetSession, setCroquetView]
+    [setMultisynqSession, setMultisynqView]
   )
 
   // Update currentSessionParams when props change
@@ -71,30 +71,30 @@ export function CroquetRoot<M extends ReactModel>({
   useEffect(() => {
     async function join(): Promise<void> {
       // If already joined, do nothing
-      if (croquetSessionRef.current) return
+      if (multisynqSessionRef.current) return
 
       // If explicitly told to not join, do not join
       if (!currentSessionParams.join) return
 
       if (nextSessionRef.current) {
         // We are already joined to the next session
-        croquetSessionRef.current = nextSessionRef.current
+        multisynqSessionRef.current = nextSessionRef.current
         nextSessionRef.current = null
       } else {
-        croquetSessionRef.current = 'joining'
-        croquetSessionRef.current = await createCroquetSession<M>(currentSessionParams as any)
+        multisynqSessionRef.current = 'joining'
+        multisynqSessionRef.current = await createMultisynqSession<M>(currentSessionParams as any)
       }
-      const session = croquetSessionRef.current
+      const session = multisynqSessionRef.current
 
       updateState(session)
 
       setSyncedCallback((flag) => {
-        const session = croquetSessionRef.current
+        const session = multisynqSessionRef.current
         if (session !== null && session !== 'joining') {
           if (flag) updateState(session)
           if (session.view) {
             session.view.detachCallback = () => {
-              setCroquetView(null)
+              setMultisynqView(null)
             }
           }
         }
@@ -104,9 +104,9 @@ export function CroquetRoot<M extends ReactModel>({
     join()
 
     return () => {
-      const session = croquetSessionRef.current
+      const session = multisynqSessionRef.current
       if (session !== null && session !== 'joining') {
-        croquetSessionRef.current = null
+        multisynqSessionRef.current = null
         session.leave()
       }
     }
@@ -132,7 +132,7 @@ export function CroquetRoot<M extends ReactModel>({
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { join, ...args } = newParams
 
-      createCroquetSession(args).then((newSession) => {
+      createMultisynqSession(args).then((newSession) => {
         nextSessionRef.current = newSession
         setCurrentSessionParams(newParams)
       })
@@ -145,19 +145,19 @@ export function CroquetRoot<M extends ReactModel>({
     updateState(null)
   }, [setCurrentSessionParams, updateState])
 
-  if ((currentSessionParams.join && croquetView) || showChildrenWithoutSession) {
+  if ((currentSessionParams.join && multisynqView) || showChildrenWithoutSession) {
     const contextValue = {
       sessionParams: currentSessionParams,
-      session: croquetSession,
-      view: croquetView,
-      model: croquetView?.model || null,
+      session: multisynqSession,
+      view: multisynqView,
+      model: multisynqView?.model || null,
       setSession,
       leaveSession
     }
     return (
-      <CroquetContext.Provider value={contextValue}>
+      <MultisynqContext.Provider value={contextValue}>
         {children}
-      </CroquetContext.Provider>
+      </MultisynqContext.Provider>
     )
   }
   return null

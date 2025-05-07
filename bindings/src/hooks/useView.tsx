@@ -1,8 +1,8 @@
-import { useCroquetContext } from './useCroquetContext'
-import { CroquetReactView } from '../CroquetReactView'
+import { useMultisynqContext } from './useMultisynqContext'
+import { MultisynqReactView } from '../MultisynqReactView'
 import { ReactModel } from '../ReactModel'
 
-export function useView<M extends ReactModel>(): CroquetReactView<M> | null {
-  const { view } = useCroquetContext<M>()
+export function useView<M extends ReactModel>(): MultisynqReactView<M> | null {
+  const { view } = useMultisynqContext<M>()
   return view
 }

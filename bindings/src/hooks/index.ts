@@ -1,4 +1,4 @@
-export { useCroquetContext } from './useCroquetContext'
+export { useMultisynqContext } from './useMultisynqContext'
 export { useDetachCallback } from './useDetachCallback'
 export { useIsJoined } from './useIsJoined'
 export { useJoinedViews } from './useJoinedViews'
@@ -22,7 +22,7 @@ export { useViewId } from './useViewId'
 import { useJoinedViews } from './useJoinedViews'
 import { useSession } from './useSession'
 import { useView } from './useView'
-const useCroquetSession = useSession
-const useCroquetView = useView
+const useMultisynqSession = useSession
+const useMultisynqView = useView
 const useConnectedViews = useJoinedViews
-export { useCroquetSession, useConnectedViews, useCroquetView }
+export { useMultisynqSession, useConnectedViews, useMultisynqView }

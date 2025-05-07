@@ -1,4 +1,4 @@
-import { View } from '@croquet/croquet'
+import { View } from '@multisynq/client'
 import { ReactModel } from './ReactModel'
 
 export type UpdateCallback = (time: number) => void
@@ -9,7 +9,7 @@ let storedSyncedCallback: ((flag: boolean) => void) | null = null
 
 // our top level view that gets the root model
 // and from which we create our one-time-use views per component
-export class CroquetReactView<M extends ReactModel> extends View {
+export class MultisynqReactView<M extends ReactModel> extends View {
   model: M
   updateCallback: UpdateCallback | null
   syncedCallback: SyncedCallback | null
@@ -53,11 +53,11 @@ export class CroquetReactView<M extends ReactModel> extends View {
  *setSyncedCallback((flag) => {
  *    console.log(`synced`, flag)
  *    if (flag) {
- *        setCroquetView((old) => session.view)
+ *        setMultisynqView((old) => session.view)
  *    }
  *    session.view.detachCallback = () => {
  *        console.log(`detached`)
- *        setCroquetView(null)
+ *        setMultisynqView(null)
  *    }
  *})
  *```

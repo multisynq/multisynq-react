@@ -1,6 +1,6 @@
-import { useCroquetContext } from "./useCroquetContext";
+import { useMultisynqContext } from "./useMultisynqContext";
 
 export function useLeaveSession() {
-    const { leaveSession } = useCroquetContext()
+    const { leaveSession } = useMultisynqContext()
     return leaveSession
 }
