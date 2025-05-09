@@ -1,8 +1,6 @@
 The Multisynq React bindings is a simple framework for using Multisynq together with React.js. It allows to write the Multisynq's View side code in React that works with the Multisynq Model code.
 This documentation assumes that you are familiarized with Multisynq's [main concepts](../client/index.html#main-concepts) and how [views](../client/index.html#views) and [models](../client/index.html#models) interact via [events](../client/index.html#events).
 
-Upgrading from v1.4? Check out our [Migration Guide](./v2.0.0_migration_guide.html)
-
 ## Overview
 
 The [`@multisynq/react`](https://www.npmjs.com/package/@multisynq/react) package provides a simple framework for using Multisynq together with React.
