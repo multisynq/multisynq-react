@@ -24,22 +24,10 @@ npm create vite@latest mondrian -- --template react-ts
 
 This will create a new directory `mondrian` with the base code for this tutorial.
 
-Next, update the `package.json` file to add the following dependencies:
-
-```json
-{
-  "dependencies": {
-    // ... Other dependencies
-    "@multisynq/react": "^1.0.0",
-    "react-icons": "^5.0.1"
-  }
-}
-```
-
-Finally, go to the `mondrian` directory and install the required dependencies, by running
+Next, go to the `mondrian` directory and install `@multisynq/react`:
 
 ```bash
-npm install
+npm install --save @multisynq/react
 ```
 
 To start the application, you just need to run
