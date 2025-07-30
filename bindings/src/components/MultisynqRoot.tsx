@@ -1,10 +1,9 @@
-import { useEffect, useState, useRef, useCallback } from 'react'
-import { MultisynqSession, App } from '@multisynq/client'
-import { MultisynqReactView } from '../MultisynqReactView'
-import { setSyncedCallback } from '../MultisynqReactView'
-import { MultisynqContext } from './MultisynqContext'
+import { App, MultisynqSession } from '@multisynq/client'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { createMultisynqSession, MultisynqReactSessionParameters } from '../createMultisynqSession'
+import { MultisynqReactView, setSyncedCallback } from '../MultisynqReactView'
 import { ReactModel } from '../ReactModel'
+import { MultisynqContext } from './MultisynqContext'
 
 export interface ReactSessionParameters<M extends ReactModel> extends Omit<MultisynqReactSessionParameters<M>, 'name'> {
   name?: string
@@ -39,11 +38,11 @@ export function MultisynqRoot<M extends ReactModel>({
   const [multisynqSession, setMultisynqSession] = useState<MultisynqSession<MultisynqReactView<M>> | null>(null)
   const [multisynqView, setMultisynqView] = useState<MultisynqReactView<M> | null>(null)
   const [currentSessionParams, setCurrentSessionParams] = useState<SessionParamsState<M>>(() => {
-    if(!deferSession) {
-      if(!sessionParams.name) {
+    if (!deferSession) {
+      if (!sessionParams.name) {
         sessionParams.name = App.randomSession()
       }
-      if(!sessionParams.password) {
+      if (!sessionParams.password) {
         sessionParams.password = App.randomPassword()
       }
     }
@@ -122,20 +121,30 @@ export function MultisynqRoot<M extends ReactModel>({
         join: true,
       }
 
-      if(!newParams.name) {
+      if (!newParams.name) {
         newParams.name = App.randomSession()
       }
-      if(!newParams.password) {
+      if (!newParams.password) {
         newParams.password = App.randomPassword()
       }
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { join, ...args } = newParams
 
-      createMultisynqSession(args).then((newSession) => {
-        nextSessionRef.current = newSession
-        setCurrentSessionParams(newParams)
-      })
+      try {
+        const newSession = await createMultisynqSession(args)
+        // Verify if the next session is null, if so, set the new session to the next session
+        // and update the current session params
+        if (nextSessionRef.current === null) {
+          nextSessionRef.current = newSession
+          setCurrentSessionParams(newParams)
+        } else {
+          // Another session was created in the meantime
+          newSession.leave()
+        }
+      } catch (error) {
+        console.error('Failed to create session:', error)
+      }
     },
     [setCurrentSessionParams, currentSessionParams]
   )
@@ -152,13 +161,9 @@ export function MultisynqRoot<M extends ReactModel>({
       view: multisynqView,
       model: multisynqView?.model || null,
       setSession,
-      leaveSession
+      leaveSession,
     }
-    return (
-      <MultisynqContext.Provider value={contextValue}>
-        {children}
-      </MultisynqContext.Provider>
-    )
+    return <MultisynqContext.Provider value={contextValue}>{children}</MultisynqContext.Provider>
   }
   return null
 }
